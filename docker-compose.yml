@@ -1,0 +1,51 @@
+version: "3"
+services:
+  mariadb:
+    image: mariadb:10.8.2
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_ROOT_HOST
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    links:
+      - mariadb:mariadb
+    depends_on:
+      - mariadb
+    environment:
+      - PMA_HOST
+
+  nginx:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      # These ports are in format <host-port>:<container-port>
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+
+    # Uncomment the next line if you uncomment anything in the section
+    #environment:
+      # Uncomment this if you want to change the location of 
+      # the SQLite DB file within the container
+      # DB_SQLITE_FILE: "/data/database.sqlite"
+      # Uncomment this if IPv6 is not enabled on your host
+      #- DISABLE_IPV6
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+networks:
+  default:
+    name: your_network_name
+    external: true
