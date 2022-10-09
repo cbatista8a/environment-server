@@ -64,6 +64,9 @@ networks:
 
 First at all: your_domain.com DNS must point to Server IP
 
+If you work in local environment add `127.0.0.1  your_domain.com` to your /etc/hosts 
+for correct DNS resolution
+
 On Nginx Proxy Manager Web interface create new "Proxy Host"
 and configure your_domain.com to point to container service "wp_project_name"
 on port 80 or internal port that your container expose and enable let's encrypt ssl certificate.
