@@ -39,7 +39,12 @@ create other containers on a separate dir
 browse to http://your_ip_or_domain_server:81 and create a proxy host whit let's encrypt ssl certificates
 and point to an specific service inside container indicating internal port.
 
-> Screenshots
+## Default Admin User:
+
+Email:    `admin@example.com`
+Password: `changeme`
+
+## Screenshots
 
 ![septup domain](./doc/register_domain_proxy.png)
 
